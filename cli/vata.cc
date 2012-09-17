@@ -164,7 +164,7 @@ int performOperation(const Arguments& args, AbstrParser& parser,
 	if (args.operands >= 2)
 	{
 		autInput2.LoadFromString(parser, VATA::Util::ReadFile(args.fileName2),
-			stateDict2);
+			(Options(args.options)["sharedS"] == "yes")?(stateDict1):(stateDict2));
 	}
 
 	if ((args.command == COMMAND_LOAD) ||
@@ -375,6 +375,8 @@ int main(int argc, char* argv[])
 		printHelp(true);
 		return EXIT_SUCCESS;
 	}
+
+	args.options.insert(std::make_pair("sharedS", "no"));
 
 	// create the symbol directory for the BDD-based automata
 	BDDTopDownTreeAut::StringToSymbolDict bddSymbolDict;
