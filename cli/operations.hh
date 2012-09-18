@@ -36,7 +36,9 @@ bool CheckInclusion(Automaton smaller, Automaton bigger, const Arguments& args)
 	std::runtime_error optErrorEx("Invalid options for inclusion: " +
 			Convert::ToString(options));
 
-	AutBase::StateType states = AutBase::SanitizeAutsForInclusion(smaller, bigger);
+	AutBase::StateType states = AutBase::SanitizeAutsForInclusion(
+		smaller, bigger, options["sharedS"] == "yes"
+	);
 
 	clock_gettime(CLOCK_THREAD_CPUTIME_ID, &startTime);     // set the timer
 

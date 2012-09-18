@@ -94,7 +94,7 @@ public:   // methods
 	}
 
 	template <class Automaton>
-	static StateType SanitizeAutsForInclusion(Automaton& smaller, Automaton& bigger)
+	static StateType SanitizeAutsForInclusion(Automaton& smaller, Automaton& bigger, bool sharedStates = false)
 	{
 		StateType stateCnt = 0;
 		StateToStateMap stateMap;
@@ -106,7 +106,10 @@ public:   // methods
 		tmpAut.ReindexStates(newSmaller, stateTrans);
 
 		tmpAut = RemoveUselessStates(bigger);
-		stateMap.clear();
+
+		if (!sharedStates)
+			stateMap.clear();
+
 		Automaton newBigger;
 		tmpAut.ReindexStates(newBigger, stateTrans);
 
